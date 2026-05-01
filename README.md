@@ -1,5 +1,5 @@
 # Student Grade Service  
-Yayy
+
 - CMake
 - GoogleTest
 - pruebas unitarias
