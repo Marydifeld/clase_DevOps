@@ -18,7 +18,7 @@
 
 En Ubuntu/Debian:
 
-```bash :)
+```bash 
 sudo apt-get update
 sudo apt-get install -y cmake ninja-build g++ lcov curl git
 ```
