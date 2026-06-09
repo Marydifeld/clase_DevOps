@@ -1,4 +1,4 @@
-# Student Grade Service :)
+# Student Grade Service
 
 - CMake
 - GoogleTest
