@@ -1,8 +1,3 @@
-/*
- * Copyright (c) 2026
- * All rights reserved.
- */
-
 #include "file_utils.h"
 #include <fstream>
 #include <stdexcept>
