@@ -1,4 +1,8 @@
-// Copyright 2026
+/*
+ * Copyright (c) 2026
+ * All rights reserved.
+ */
+
 #include <gtest/gtest.h>
 #include "../../include/file_utils.h"
 
