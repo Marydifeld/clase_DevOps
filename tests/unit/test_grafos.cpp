@@ -1,6 +1,20 @@
 #include <gtest/gtest.h>
 #include "../../include/file_utils.h" 
 
+TEST(GraphAlgorithmsTest, FileReaderThrowsException) {
+    vector<vector<int>> dists, max_data;
+    vector<pair<int, int>> cor;
+    EXPECT_THROW(fileReader("archivo_que_no_existe.txt", dists, max_data, cor), std::runtime_error);
+}
+
+// Prueba con datos vacíos para aumentar cobertura de seguridad
+TEST(GraphAlgorithmsTest, EmptyDataTests) {
+    vector<vector<int>> empty_dists;
+    EXPECT_TRUE(prim(empty_dists).empty());
+    EXPECT_TRUE(solveTSP(empty_dists).empty());
+    EXPECT_EQ(maxFlow(empty_dists), 0);
+}
+
 TEST(GraphAlgorithmsTest, FileReaderTest) {
     vector<vector<int>> dists, max_data;
     vector<pair<int, int>> cor;
