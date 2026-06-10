@@ -70,10 +70,11 @@ void run_server() {
     svr.listen("0.0.0.0", port);
 }
 
+// --- ENTRY POINT ---
 int main(int argc, char* argv[]) {
     bool is_server = false;
 
-    if (std::getenv("PORT")) {
+    if (std::getenv("PORT") || std::getenv("GITHUB_ACTIONS") || std::getenv("CI")) {
         is_server = true;
     }
     if (argc > 1 && std::string(argv[1]) == "--server") {
