@@ -32,9 +32,11 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(httplib json googletest)
 
+# AQUI FUSIONAMOS LA API WEB CON TUS ALGORITMOS DE GRAFOS
 add_library(student_core
     src/grade_calculator.cpp
     src/student_service.cpp
+    src/file_utils.cpp
 )
 
 target_include_directories(student_core PUBLIC include)
@@ -43,7 +45,14 @@ target_link_libraries(student_core PUBLIC httplib::httplib nlohmann_json::nlohma
 add_executable(student_grade_service src/main.cpp)
 target_link_libraries(student_grade_service PRIVATE student_core)
 
-add_executable(unit_tests tests/unit/test_grade_calculator.cpp)
+# Copiar test1.txt al directorio build para las pruebas
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/test1.txt ${CMAKE_CURRENT_BINARY_DIR}/test1.txt COPYONLY)
+
+# AGREGAMOS TU NUEVO ARCHIVO DE PRUEBAS
+add_executable(unit_tests 
+    tests/unit/test_grade_calculator.cpp
+    tests/unit/test_grafos.cpp
+)
 target_link_libraries(unit_tests PRIVATE student_core GTest::gtest_main)
 
 add_executable(integration_tests tests/integration/test_integration.cpp)
