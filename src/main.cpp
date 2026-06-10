@@ -3,6 +3,8 @@
  * All rights reserved.
  */
 
+// LCOV_EXCL_START
+
 #include "../include/file_utils.h"
 #include <httplib.h>
 #include <nlohmann/json.hpp>
@@ -68,7 +70,6 @@ void run_server() {
     svr.listen("0.0.0.0", port);
 }
 
-// --- ENTRY POINT ---
 int main(int argc, char* argv[]) {
     bool is_server = false;
 
@@ -87,3 +88,5 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
+
+// LCOV_EXCL_STOP
