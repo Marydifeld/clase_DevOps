@@ -1,4 +1,8 @@
-// Copyright 2026
+/*
+ * Copyright (c) 2026
+ * All rights reserved.
+ */
+
 #include "file_utils.h"
 #include <fstream>
 #include <stdexcept>
@@ -7,7 +11,41 @@
 #include <climits>
 #include <algorithm>
 
-void file_reader(const std::string& file_path, std::vector<std::vector<int>>& dist_colonias, std::vector<std::vector<int>>& max_data, std::vector<std::pair<int, int>>& coordinates) {
+// Función Helper para reducir la Complejidad Cognitiva de file_reader
+void parse_line_data(int line_count, int n_val, const std::string& line,
+                     std::vector<std::vector<int>>& dist_colonias,
+                     std::vector<std::vector<int>>& max_data,
+                     std::vector<std::pair<int, int>>& coordinates) {
+    std::stringstream ss(line);
+    if (line_count <= n_val) {
+        int n;
+        while (ss >> n) {
+            dist_colonias[line_count - 1].push_back(n);
+        }
+    } else if (line_count <= 2 * n_val) {
+        int n;
+        while (ss >> n) {
+            max_data[line_count - (n_val + 1)].push_back(n);
+        }
+    } else {
+        std::string token;
+        while (ss >> token) {
+            std::stringstream ss2(token);
+            char open;
+            char comma;
+            char close;
+            int x;
+            int y;
+            ss2 >> open >> x >> comma >> y >> close;
+            coordinates[line_count - (2 * n_val + 1)] = {x, y};
+        }
+    }
+}
+
+void file_reader(const std::string& file_path,
+                 std::vector<std::vector<int>>& dist_colonias,
+                 std::vector<std::vector<int>>& max_data,
+                 std::vector<std::pair<int, int>>& coordinates) {
     std::ifstream file(file_path, std::ios::binary);
     if (!file) {
         throw std::runtime_error("Could not open file");
@@ -27,30 +65,8 @@ void file_reader(const std::string& file_path, std::vector<std::vector<int>>& di
             line_count++;
             continue;
         }
-        std::stringstream ss(line);
-        if (line_count <= n_val) {
-            int n;
-            while (ss >> n) {
-                dist_colonias[line_count - 1].push_back(n);
-            }
-        } else if (line_count <= 2 * n_val) {
-            int n;
-            while (ss >> n) {
-                max_data[line_count - (n_val + 1)].push_back(n);
-            }
-        } else {
-            std::string token;
-            while (ss >> token) {
-                std::stringstream ss2(token);
-                char open;
-                char comma;
-                char close;
-                int x;
-                int y;
-                ss2 >> open >> x >> comma >> y >> close;
-                coordinates[line_count - (2 * n_val + 1)] = {x, y};
-            }
-        }
+        // Llamada al helper que soluciona la complejidad
+        parse_line_data(line_count, n_val, line, dist_colonias, max_data, coordinates);
         line_count++;
     }
     file.close();
@@ -101,7 +117,10 @@ void index_to_letter(const std::vector<int>& cables) {
     }
 }
 
-void tsp_backtrack(int current_node, int visited_count, int current_cost, std::vector<int>& current_path, std::vector<int>& best_path, int& min_cost, std::vector<bool>& visited, const std::vector<std::vector<int>>& dists) {
+void tsp_backtrack(int current_node, int visited_count, int current_cost,
+                   std::vector<int>& current_path, std::vector<int>& best_path,
+                   int& min_cost, std::vector<bool>& visited,
+                   const std::vector<std::vector<int>>& dists) {
     int n = static_cast<int>(dists.size());
     if (visited_count == n) {
         if (dists[current_node][0] > 0) {

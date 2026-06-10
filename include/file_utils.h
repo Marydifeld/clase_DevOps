@@ -1,4 +1,8 @@
-// Copyright 2026
+/*
+ * Copyright (c) 2026
+ * All rights reserved.
+ */
+
 #pragma once
 #include <iostream>
 #include <string>
@@ -12,7 +16,10 @@
  * \param max_data Matrix to store max flow capacities.
  * \param coordinates Vector to store coordinates.
  */
-void file_reader(const std::string& file_path, std::vector<std::vector<int>>& dist_colonias, std::vector<std::vector<int>>& max_data, std::vector<std::pair<int, int>>& coordinates);
+void file_reader(const std::string& file_path,
+                 std::vector<std::vector<int>>& dist_colonias,
+                 std::vector<std::vector<int>>& max_data,
+                 std::vector<std::pair<int, int>>& coordinates);
 
 /**
  * \brief Computes the Minimum Spanning Tree using Prim's algorithm.
@@ -38,7 +45,10 @@ void index_to_letter(const std::vector<int>& cables);
  * \param visited Boolean vector of visited nodes.
  * \param dists Adjacency matrix of distances.
  */
-void tsp_backtrack(int current_node, int visited_count, int current_cost, std::vector<int>& current_path, std::vector<int>& best_path, int& min_cost, std::vector<bool>& visited, const std::vector<std::vector<int>>& dists);
+void tsp_backtrack(int current_node, int visited_count, int current_cost,
+                   std::vector<int>& current_path, std::vector<int>& best_path,
+                   int& min_cost, std::vector<bool>& visited,
+                   const std::vector<std::vector<int>>& dists);
 
 /**
  * \brief Solves the Traveling Salesperson Problem.
