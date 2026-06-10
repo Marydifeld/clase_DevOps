@@ -1,30 +1,93 @@
+// Copyright 2026
 #pragma once
-#include<iostream>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <utility>
 
-using namespace std;
+/**
+ * \brief Reads the input file and populates the data structures.
+ * \param file_path The path to the input file.
+ * \param dist_colonias Matrix to store distances.
+ * \param max_data Matrix to store max flow capacities.
+ * \param coordinates Vector to store coordinates.
+ */
+void file_reader(const std::string& file_path, std::vector<std::vector<int>>& dist_colonias, std::vector<std::vector<int>>& max_data, std::vector<std::pair<int, int>>& coordinates);
 
-//Leer input
-void fileReader(const string& FILE_PATH, vector<vector<int>>& 
-                dist_colonias, vector<vector<int>>& max_data,
-                vector<pair<int,int>>& coordinates);
+/**
+ * \brief Computes the Minimum Spanning Tree using Prim's algorithm.
+ * \param adj The adjacency matrix.
+ * \return A vector representing the parent of each node in the MST.
+ */
+std::vector<int> prim(const std::vector<std::vector<int>>& adj);
 
-//Parte 1- Prim (Greedy approach)
-vector<int> prim(const vector<vector<int>>& adj); 
-void indexToLetter(vector<int> cables); 
+/**
+ * \brief Prints the cables based on the MST parent array.
+ * \param cables The parent array from Prim's algorithm.
+ */
+void index_to_letter(const std::vector<int>& cables);
 
-//Parte 2 - TSP (Backtracking con Branch and Bound)
-void tspBacktrack(int currentNode, int visitedCount, int currentCost, vector<int>& currentPath, vector<int>& bestPath, int& minCost, vector<bool>& visited, const vector<vector<int>>& dists);
-vector<int> solveTSP(const vector<vector<int>>& dists);
-void printTSP(const vector<int>& bestPath);
+/**
+ * \brief Backtracking helper for TSP.
+ * \param current_node The current node.
+ * \param visited_count The number of visited nodes.
+ * \param current_cost The accumulated cost.
+ * \param current_path The current path being evaluated.
+ * \param best_path The best path found so far.
+ * \param min_cost The minimum cost found so far.
+ * \param visited Boolean vector of visited nodes.
+ * \param dists Adjacency matrix of distances.
+ */
+void tsp_backtrack(int current_node, int visited_count, int current_cost, std::vector<int>& current_path, std::vector<int>& best_path, int& min_cost, std::vector<bool>& visited, const std::vector<std::vector<int>>& dists);
 
-// Parte 3 - Flujo m�ximo (Edmonds-Karp)
-bool bfs(const vector<vector<int>>& residualGraph, int source, int sink, vector<int>& parent);
-int maxFlow(const vector<vector<int>>& capacity);
+/**
+ * \brief Solves the Traveling Salesperson Problem.
+ * \param dists Adjacency matrix of distances.
+ * \return The optimal path.
+ */
+std::vector<int> solve_tsp(const std::vector<std::vector<int>>& dists);
 
-// Parte 4 - Graham Scan (Convex Hull)
-int orientation(pair<int, int> p, pair<int, int> q, pair<int, int> r);
-vector<pair<int, int>> convexHull(vector<pair<int, int>> points);
-void printPolygon(const vector<pair<int, int>>& polygon);
+/**
+ * \brief Prints the TSP path.
+ * \param best_path The path to print.
+ */
+void print_tsp(const std::vector<int>& best_path);
+
+/**
+ * \brief BFS helper for Max Flow.
+ * \param residual_graph The residual graph.
+ * \param source The source node.
+ * \param sink The sink node.
+ * \param parent Parent array to store path.
+ * \return True if sink is reachable, false otherwise.
+ */
+bool bfs(const std::vector<std::vector<int>>& residual_graph, int source, int sink, std::vector<int>& parent);
+
+/**
+ * \brief Computes the maximum flow using Edmonds-Karp.
+ * \param capacity Capacity matrix.
+ * \return The maximum flow value.
+ */
+int max_flow(const std::vector<std::vector<int>>& capacity);
+
+/**
+ * \brief Computes the orientation of three points.
+ * \param p First point.
+ * \param q Second point.
+ * \param r Third point.
+ * \return 0 if collinear, 1 if clockwise, 2 if counterclockwise.
+ */
+int orientation(std::pair<int, int> p, std::pair<int, int> q, std::pair<int, int> r);
+
+/**
+ * \brief Computes the convex hull using Graham Scan.
+ * \param points The vector of points.
+ * \return The points that form the convex hull.
+ */
+std::vector<std::pair<int, int>> convex_hull(std::vector<std::pair<int, int>> points);
+
+/**
+ * \brief Prints the polygon vertices.
+ * \param polygon The vertices of the polygon.
+ */
+void print_polygon(const std::vector<std::pair<int, int>>& polygon);
